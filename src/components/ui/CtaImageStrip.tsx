@@ -40,7 +40,7 @@ export default function CtaImageStrip({ imageSrc, title, ctaTo, ctaLabel }: Prop
         }`}
         aria-hidden
       />
-      <div className="relative mx-auto max-w-7xl px-4 py-14 text-center sm:px-6 sm:py-16 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
         <h2
           id="cta-strip-heading"
           className="mx-auto max-w-2xl text-balance text-xl font-semibold leading-snug text-white sm:text-2xl"

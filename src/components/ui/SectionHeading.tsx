@@ -18,7 +18,7 @@ export default function SectionHeading({
   const alignClass = align === "center" ? "mx-auto text-center" : "";
 
   return (
-    <div className={`mb-10 max-w-3xl sm:mb-14 ${alignClass}`}>
+    <div className={`mb-12 max-w-3xl sm:mb-16 ${alignClass}`}>
       {eyebrow && (
         <div
           className={`mb-4 flex items-center gap-3 ${
@@ -36,12 +36,12 @@ export default function SectionHeading({
           </p>
         </div>
       )}
-      <h2 className="text-balance font-display text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
+      <h2 className="text-balance font-display text-3xl font-semibold leading-[1.2] tracking-tight text-brand-ink sm:text-[2.125rem]">
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`mt-4 max-w-2xl text-lg leading-relaxed text-slate-600 ${
+          className={`mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg ${
             align === "center" ? "mx-auto" : ""
           }`}
         >

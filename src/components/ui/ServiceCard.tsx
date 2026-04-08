@@ -21,13 +21,13 @@ export default function ServiceCard({
   return (
     <motion.article
       {...m}
-      className="group flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-accent/30 hover:shadow-lift sm:p-8 motion-reduce:transform-none"
+      className="group flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white p-8 shadow-card transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.01] hover:border-brand-accent/35 hover:shadow-[0_20px_50px_-12px_rgba(37,99,235,0.18)] sm:p-9 motion-reduce:transform-none motion-reduce:hover:shadow-card"
     >
       <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-brand-accent transition group-hover:bg-blue-100">
         <Icon className="h-6 w-6" strokeWidth={1.5} aria-hidden />
       </div>
-      <h3 className="text-xl font-semibold text-brand-ink">{title}</h3>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
+      <h3 className="text-xl font-semibold tracking-tight text-brand-ink">{title}</h3>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600 [text-wrap:pretty]">
         {description}
       </p>
       <ul className="mt-6 space-y-2.5 border-t border-slate-100 pt-6 text-sm text-slate-600">
