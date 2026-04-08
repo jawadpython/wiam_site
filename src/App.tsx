@@ -7,6 +7,9 @@ const Services = lazy(() => import("@/pages/Services"));
 const About = lazy(() => import("@/pages/About"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const Technologies = lazy(() => import("@/pages/Technologies"));
+const MentionsLegales = lazy(() => import("@/pages/MentionsLegales"));
+const PolitiqueConfidentialite = lazy(() => import("@/pages/PolitiqueConfidentialite"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function PageLoader() {
   return (
@@ -27,6 +30,12 @@ export default function App() {
           <Route path="about" element={<Navigate to="/a-propos" replace />} />
           <Route path="contact" element={<Contact />} />
           <Route path="technologies" element={<Technologies />} />
+          <Route path="mentions-legales" element={<MentionsLegales />} />
+          <Route
+            path="politique-confidentialite"
+            element={<PolitiqueConfidentialite />}
+          />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Suspense>

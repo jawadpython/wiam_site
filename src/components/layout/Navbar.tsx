@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -13,20 +13,29 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 shadow-nav backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:h-[4.25rem] sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="flex min-w-0 flex-shrink-0 items-baseline gap-2 no-underline"
+          className="flex min-w-0 flex-shrink-0 items-center gap-3 no-underline"
           onClick={() => setOpen(false)}
         >
-          <span className="font-display text-lg font-semibold tracking-tight text-brand-ink">
-            Wiam
+          <span
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-accent to-blue-900 text-sm font-bold text-white shadow-md shadow-blue-900/20"
+            aria-hidden
+          >
+            W
           </span>
-          <span className="hidden text-[0.625rem] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:inline">
-            IT Consulting
+          <span className="flex min-w-0 flex-col leading-tight">
+            <span className="font-display text-lg font-semibold tracking-tight text-brand-ink">
+              Wiam
+            </span>
+            <span className="hidden text-[0.625rem] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:inline">
+              IT Consulting
+            </span>
           </span>
         </Link>
 
@@ -92,10 +101,13 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.22 }}
             className="overflow-hidden border-t border-slate-200 bg-white lg:hidden"
           >
-            <nav className="flex flex-col px-4 py-3" aria-label="mobile">
+            <nav
+              className="flex flex-col px-4 py-3"
+              aria-label="Navigation principale (mobile)"
+            >
               {links.map((l) => (
                 <NavLink
                   key={l.to}

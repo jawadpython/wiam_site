@@ -18,11 +18,23 @@ export default function SectionHeading({
   const alignClass = align === "center" ? "mx-auto text-center" : "";
 
   return (
-    <div className={`mb-10 max-w-3xl sm:mb-12 ${alignClass}`}>
+    <div className={`mb-10 max-w-3xl sm:mb-14 ${alignClass}`}>
       {eyebrow && (
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">
-          {eyebrow}
-        </p>
+        <div
+          className={`mb-4 flex items-center gap-3 ${
+            align === "center" ? "justify-center" : ""
+          }`}
+        >
+          {align === "left" && (
+            <span
+              className="h-4 w-1 shrink-0 rounded-full bg-brand-accent shadow-sm shadow-blue-500/25"
+              aria-hidden
+            />
+          )}
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent">
+            {eyebrow}
+          </p>
+        </div>
       )}
       <h2 className="text-balance font-display text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
         {title}

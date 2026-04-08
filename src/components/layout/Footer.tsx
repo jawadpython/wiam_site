@@ -9,6 +9,11 @@ const footerLinks = [
   { to: "/contact", label: "Contact" },
 ];
 
+const legalLinks = [
+  { to: "/mentions-legales", label: "Mentions légales" },
+  { to: "/politique-confidentialite", label: "Politique de confidentialité" },
+];
+
 const REGION =
   "Moyen-Orient · Interventions en Arabie saoudite, GCC et à l’international";
 
@@ -18,11 +23,19 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           <div className="lg:col-span-2">
-            <div className="mb-4 flex items-baseline gap-2">
-              <span className="text-lg font-semibold text-white">Wiam</span>
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                IT Consulting
+            <div className="mb-4 flex items-center gap-3">
+              <span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-accent to-blue-900 text-sm font-bold text-white shadow-md shadow-black/20"
+                aria-hidden
+              >
+                W
               </span>
+              <div className="flex flex-col leading-tight">
+                <span className="text-lg font-semibold text-white">Wiam</span>
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  IT Consulting
+                </span>
+              </div>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-slate-400">
               Cabinet de conseil IT indépendant : infrastructures sécurisées, réseaux
@@ -71,12 +84,36 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate-500 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/10 pt-8 text-xs text-slate-500">
+          {legalLinks.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="text-slate-400 transition hover:text-white"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-8 flex flex-col items-start justify-between gap-4 text-xs text-slate-500 sm:flex-row sm:items-center">
           <p>© {new Date().getFullYear()} Wiam IT Consulting. Tous droits réservés.</p>
           <p className="text-slate-600">
             Conseil IT · Cybersécurité · Réseaux · Développement logiciel
           </p>
         </div>
+        <p className="mt-6 text-center text-[0.65rem] text-slate-600">
+          Crédits visuels :{" "}
+          <a
+            href="https://unsplash.com"
+            className="text-slate-500 underline-offset-2 hover:text-slate-400 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Unsplash
+          </a>{" "}
+          (remplacer par vos propres visuels en production)
+        </p>
       </div>
     </footer>
   );

@@ -1,0 +1,5 @@
+# Remplacer l'URL du sitemap par votre domaine de production (aligné sur VITE_SITE_URL)
+User-agent: *
+Allow: /
+
+Sitemap: https://www.wiamitconsulting.services/sitemap.xml

@@ -1,6 +1,10 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
+import ContentImage from "@/components/ui/ContentImage";
+import { IMAGES, ogImages } from "@/config/images";
+import { canonicalUrl } from "@/config/site";
+import { useFadeEnterMotion, useInViewMotion } from "@/lib/motion";
 
 const categories = [
   {
@@ -48,7 +52,40 @@ const also = [
   "Feuille de route zero trust",
 ];
 
+function TechCategoryCard({
+  cat,
+  index,
+}: {
+  cat: (typeof categories)[number];
+  index: number;
+}) {
+  const m = useInViewMotion(index * 0.05, 12);
+  return (
+    <motion.article
+      {...m}
+      className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm"
+    >
+      <h2 className="text-lg font-semibold text-brand-ink">{cat.title}</h2>
+      <ul className="mt-5 space-y-2 text-sm leading-relaxed text-slate-600">
+        {cat.items.map((item) => (
+          <li key={item} className="flex gap-2">
+            <span
+              className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-accent"
+              aria-hidden
+            />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </motion.article>
+  );
+}
+
 export default function Technologies() {
+  const heroLeft = useFadeEnterMotion(10, 0.4, 0);
+  const heroRight = useFadeEnterMotion(12, 0.45, 0.05);
+  const mAlso = useInViewMotion(0, 10);
+
   return (
     <>
       <Helmet>
@@ -57,30 +94,35 @@ export default function Technologies() {
           name="description"
           content="Environnements techniques et outils couverts par Wiam IT Consulting : Cisco, Linux, pare-feu, cloud, Python, intégration d’entreprise."
         />
-        <link rel="canonical" href="https://www.wiamit.com/technologies" />
+        <link rel="canonical" href={canonicalUrl("/technologies")} />
+        <meta property="og:image" content={ogImages.technologies} />
       </Helmet>
 
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="max-w-3xl"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">
-              Technologies
-            </p>
-            <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-brand-ink sm:text-5xl">
-              Un socle technique aligné sur vos standards
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-slate-600">
-              Nous adaptons nos interventions à vos choix éditeurs et à votre
-              politique cloud. La liste ci-dessous est indicative — elle reflète des
-              environnements que nous accompagnons régulièrement au Moyen-Orient et à
-              l’international.
-            </p>
-          </motion.div>
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <motion.div {...heroLeft}>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                Technologies
+              </p>
+              <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-brand-ink sm:text-5xl">
+                Un socle technique aligné sur vos standards
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-slate-600">
+                Nous adaptons nos interventions à vos choix éditeurs et à votre
+                politique cloud. La liste ci-dessous est indicative — elle reflète des
+                environnements que nous accompagnons régulièrement au Moyen-Orient et à
+                l’international.
+              </p>
+            </motion.div>
+            <motion.div {...heroRight}>
+              <ContentImage
+                src={IMAGES.techAbstract}
+                alt="Environnement de développement logiciel et ingénierie"
+                aspect="16/10"
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -88,34 +130,12 @@ export default function Technologies() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 md:grid-cols-2">
             {categories.map((cat, i) => (
-              <motion.article
-                key={cat.title}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm"
-              >
-                <h2 className="text-lg font-semibold text-brand-ink">{cat.title}</h2>
-                <ul className="mt-5 space-y-2 text-sm leading-relaxed text-slate-600">
-                  {cat.items.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span
-                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-accent"
-                        aria-hidden
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </motion.article>
+              <TechCategoryCard key={cat.title} cat={cat} index={i} />
             ))}
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            {...mAlso}
             className="mt-12 rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center"
           >
             <p className="text-sm font-semibold uppercase tracking-wider text-slate-500">

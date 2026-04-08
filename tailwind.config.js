@@ -20,14 +20,20 @@ export default {
       },
       fontFamily: {
         sans: [
-          '"Inter"',
+          '"Source Sans 3"',
           "system-ui",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
           "sans-serif",
         ],
-        display: ['"Inter"', "system-ui", "sans-serif"],
+        display: [
+          '"Source Serif 4"',
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "serif",
+        ],
       },
       backgroundImage: {
         "hero-light":
@@ -35,10 +41,11 @@ export default {
         "footer-dark": "linear-gradient(180deg, #0c1e3c 0%, #0a1628 100%)",
       },
       boxShadow: {
-        card: "0 1px 3px 0 rgb(0 0 0 / 0.06), 0 12px 32px -8px rgb(15 23 42 / 0.08)",
+        card: "0 1px 2px 0 rgb(15 23 42 / 0.04), 0 8px 24px -6px rgb(15 23 42 / 0.08)",
         "card-hover":
-          "0 4px 6px -1px rgb(0 0 0 / 0.07), 0 20px 40px -12px rgb(37 99 235 / 0.12)",
-        nav: "0 1px 0 0 rgb(226 232 240 / 1)",
+          "0 4px 12px -2px rgb(15 23 42 / 0.08), 0 20px 40px -12px rgb(37 99 235 / 0.14)",
+        nav: "0 1px 0 0 rgb(226 232 240 / 1), 0 4px 16px -4px rgb(15 23 42 / 0.06)",
+        lift: "0 12px 40px -12px rgb(15 23 42 / 0.12)",
       },
       maxWidth: {
         prose: "42rem",

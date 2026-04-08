@@ -2,6 +2,10 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Target, Compass, Layers } from "lucide-react";
 import Button from "@/components/ui/Button";
+import ContentImage from "@/components/ui/ContentImage";
+import { IMAGES, ogImages } from "@/config/images";
+import { canonicalUrl } from "@/config/site";
+import { useFadeEnterMotion, useInViewMotion } from "@/lib/motion";
 
 const approach = [
   {
@@ -26,7 +30,30 @@ const approach = [
   },
 ];
 
+function ApproachStep({
+  item,
+  index,
+}: {
+  item: (typeof approach)[number];
+  index: number;
+}) {
+  const m = useInViewMotion(index * 0.04, 8);
+  return (
+    <motion.div {...m} className="border-l-2 border-brand-accent pl-6">
+      <span className="text-xs font-bold text-brand-accent">{item.step}</span>
+      <h3 className="mt-2 text-lg font-semibold text-brand-ink">{item.title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.text}</p>
+    </motion.div>
+  );
+}
+
 export default function About() {
+  const heroLeft = useFadeEnterMotion(10, 0.4, 0);
+  const heroRight = useFadeEnterMotion(14, 0.45, 0.06);
+  const mMission = useInViewMotion(0, 12);
+  const mVision = useInViewMotion(0.06, 12);
+  const mExpert = useInViewMotion(0, 12);
+
   return (
     <>
       <Helmet>
@@ -35,29 +62,34 @@ export default function About() {
           name="description"
           content="Wiam IT Consulting : cabinet de conseil IT indépendant, mission, vision et méthodologie structurée pour missions d’entreprise au Moyen-Orient et à l’international."
         />
-        <link rel="canonical" href="https://www.wiamit.com/a-propos" />
+        <link rel="canonical" href={canonicalUrl("/a-propos")} />
+        <meta property="og:image" content={ogImages.about} />
       </Helmet>
 
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="max-w-3xl"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">
-              À propos
-            </p>
-            <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-brand-ink sm:text-5xl">
-              Un cabinet de conseil IT, avec la discipline d’exécution d’une grande entreprise
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-slate-600">
-              Wiam IT Consulting est structuré comme une société de services professionnels
-              : engagements formalisés, confidentialité stricte et discours adapté aussi
-              bien aux comités de direction qu’aux équipes techniques et d’audit.
-            </p>
-          </motion.div>
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <motion.div {...heroLeft}>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                À propos
+              </p>
+              <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-brand-ink sm:text-5xl">
+                Un cabinet de conseil IT, avec la discipline d’exécution d’une grande entreprise
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-slate-600">
+                Wiam IT Consulting est structuré comme une société de services professionnels
+                : engagements formalisés, confidentialité stricte et discours adapté aussi
+                bien aux comités de direction qu’aux équipes techniques et d’audit.
+              </p>
+            </motion.div>
+            <motion.div {...heroRight}>
+              <ContentImage
+                src={IMAGES.meeting}
+                alt="Réunion professionnelle et pilotage de projet"
+                aspect="16/10"
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -65,9 +97,7 @@ export default function About() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <motion.article
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              {...mMission}
               className="rounded-xl border border-slate-200 bg-white p-8 shadow-card lg:p-10"
             >
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-brand-accent">
@@ -82,10 +112,7 @@ export default function About() {
               </p>
             </motion.article>
             <motion.article
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.06 }}
+              {...mVision}
               className="rounded-xl border border-slate-200 bg-white p-8 shadow-card lg:p-10"
             >
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-brand-accent">
@@ -102,9 +129,7 @@ export default function About() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            {...mExpert}
             className="mt-12 rounded-xl border border-slate-200 bg-white p-8 shadow-card lg:p-12"
           >
             <h2 className="font-display text-2xl font-semibold text-brand-ink sm:text-3xl">
@@ -145,22 +170,7 @@ export default function About() {
 
           <div className="grid gap-6 md:grid-cols-2">
             {approach.map((item, i) => (
-              <motion.div
-                key={item.step}
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.04 }}
-                className="border-l-2 border-brand-accent pl-6"
-              >
-                <span className="text-xs font-bold text-brand-accent">{item.step}</span>
-                <h3 className="mt-2 text-lg font-semibold text-brand-ink">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  {item.text}
-                </p>
-              </motion.div>
+              <ApproachStep key={item.step} item={item} index={i} />
             ))}
           </div>
 

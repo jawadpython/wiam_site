@@ -15,6 +15,10 @@ import {
 } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
+import ContentImage from "@/components/ui/ContentImage";
+import { IMAGES, ogImages } from "@/config/images";
+import { canonicalUrl } from "@/config/site";
+import { useFadeEnterMotion, useInViewMotion } from "@/lib/motion";
 
 const sections = [
   {
@@ -142,7 +146,39 @@ const sections = [
   },
 ];
 
+type ServiceBlock = (typeof sections)[number]["blocks"][number];
+
+function ServiceBlockArticle({ block, bi }: { block: ServiceBlock; bi: number }) {
+  const m = useInViewMotion(bi * 0.05, 12, { margin: "-24px" });
+  const BlockIcon = block.icon;
+  return (
+    <motion.article
+      {...m}
+      className="rounded-xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8"
+    >
+      <div className="mb-4 flex items-center gap-3">
+        <BlockIcon className="h-5 w-5 text-brand-accent" strokeWidth={1.5} aria-hidden />
+        <h3 className="text-lg font-semibold text-brand-ink">{block.heading}</h3>
+      </div>
+      <ul className="space-y-2 text-sm leading-relaxed text-slate-600">
+        {block.bullets.map((b) => (
+          <li key={b} className="flex gap-2">
+            <span
+              className="mt-2 h-1 w-1 shrink-0 rounded-full bg-slate-400"
+              aria-hidden
+            />
+            {b}
+          </li>
+        ))}
+      </ul>
+    </motion.article>
+  );
+}
+
 export default function Services() {
+  const heroLeft = useFadeEnterMotion(10, 0.4, 0);
+  const heroRight = useFadeEnterMotion(12, 0.45, 0.05);
+
   return (
     <>
       <Helmet>
@@ -151,29 +187,35 @@ export default function Services() {
           name="description"
           content="Cybersécurité, réseaux et développement logiciel : tests d’intrusion, audits, VPN, VoIP, applications métiers et intégration pour entreprises."
         />
-        <link rel="canonical" href="https://www.wiamit.com/services" />
+        <link rel="canonical" href={canonicalUrl("/services")} />
+        <meta property="og:image" content={ogImages.services} />
       </Helmet>
 
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">
-              Services
-            </p>
-            <h1 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight text-brand-ink sm:text-5xl">
-              Des prestations calibrées pour environnements réglementés et critiques
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Chaque mission démarre par un cadrage précis des résultats attendus, des
-              contraintes et des parties prenantes. La livraison suit une méthode
-              structurée : décisions traçables, risques explicités, transfert
-              opérationnel complet.
-            </p>
-          </motion.div>
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <motion.div {...heroLeft}>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                Services
+              </p>
+              <h1 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight text-brand-ink sm:text-5xl">
+                Des prestations calibrées pour environnements réglementés et critiques
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
+                Chaque mission démarre par un cadrage précis des résultats attendus, des
+                contraintes et des parties prenantes. La livraison suit une méthode
+                structurée : décisions traçables, risques explicités, transfert
+                opérationnel complet.
+              </p>
+            </motion.div>
+            <motion.div {...heroRight}>
+              <ContentImage
+                src={IMAGES.cyber}
+                alt="Cybersécurité et supervision des systèmes d’information"
+                aspect="16/10"
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -204,41 +246,9 @@ export default function Services() {
               </div>
 
               <div className="grid gap-6 md:grid-cols-2 md:gap-8">
-                {section.blocks.map((block, bi) => {
-                  const BlockIcon = block.icon;
-                  return (
-                    <motion.article
-                      key={block.heading}
-                      initial={{ opacity: 0, y: 12 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-24px" }}
-                      transition={{ delay: bi * 0.05, duration: 0.35 }}
-                      className="rounded-xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8"
-                    >
-                      <div className="mb-4 flex items-center gap-3">
-                        <BlockIcon
-                          className="h-5 w-5 text-brand-accent"
-                          strokeWidth={1.5}
-                          aria-hidden
-                        />
-                        <h3 className="text-lg font-semibold text-brand-ink">
-                          {block.heading}
-                        </h3>
-                      </div>
-                      <ul className="space-y-2 text-sm leading-relaxed text-slate-600">
-                        {block.bullets.map((b) => (
-                          <li key={b} className="flex gap-2">
-                            <span
-                              className="mt-2 h-1 w-1 shrink-0 rounded-full bg-slate-400"
-                              aria-hidden
-                            />
-                            {b}
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.article>
-                  );
-                })}
+                {section.blocks.map((block, bi) => (
+                  <ServiceBlockArticle key={block.heading} block={block} bi={bi} />
+                ))}
               </div>
             </div>
           </section>

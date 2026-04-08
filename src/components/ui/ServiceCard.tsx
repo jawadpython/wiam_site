@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useInViewMotion } from "@/lib/motion";
 
 type Props = {
   icon: LucideIcon;
@@ -16,13 +17,11 @@ export default function ServiceCard({
   items,
   delay = 0,
 }: Props) {
+  const m = useInViewMotion(delay);
   return (
     <motion.article
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-32px" }}
-      transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex h-full flex-col rounded-xl border border-slate-200/90 bg-white p-7 shadow-card transition hover:border-brand-accent/25 hover:shadow-card-hover sm:p-8"
+      {...m}
+      className="group flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-accent/30 hover:shadow-lift sm:p-8 motion-reduce:transform-none"
     >
       <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-brand-accent transition group-hover:bg-blue-100">
         <Icon className="h-6 w-6" strokeWidth={1.5} aria-hidden />
